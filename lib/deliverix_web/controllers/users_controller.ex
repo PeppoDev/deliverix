@@ -31,16 +31,9 @@ defmodule DeliverixWeb.UsersController do
   end
 
   def delete(conn, %{"id" => id}) do
-    with {:ok, %User{} = user} <- Deliverix.delete_user(id) do
+    with {:ok, %User{}} <- Deliverix.delete_user(id) do
       conn
       |> put_status(:no_content)
-      |> render("show.json", user: user)
     end
-  end
-
-  def options(conn, _params) do
-    conn
-    |> put_status(:ok)
-    |> put_req_header("allow", "GET,DELETE,POST,PUT,OPTIONS")
   end
 end

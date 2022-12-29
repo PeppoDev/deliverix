@@ -4,6 +4,8 @@ defmodule Deliverix.User do
   alias Ecto.Changeset
 
   @primary_key {:id, :binary_id, autogenerate: true}
+
+  # re add password as required field
   @required_params [:age, :address, :cep, :cpf, :email, :name]
 
   @derive {Jason.Encoder, only: [:id, :age, :cpf, :address, :email]}

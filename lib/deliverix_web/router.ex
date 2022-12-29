@@ -1,8 +1,11 @@
 defmodule DeliverixWeb.Router do
   use DeliverixWeb, :router
 
+  alias DeliverixWeb.Plugs.UUIDChecker
+
   pipeline :api do
     plug :accepts, ["json"]
+    plug UUIDChecker
   end
 
   scope "/api", DeliverixWeb do
@@ -10,7 +13,6 @@ defmodule DeliverixWeb.Router do
 
     get "/", WelcomeController, :index
     resources "/users", UsersController, except: [:new, :edit]
-    options "/users", UsersController, :options
 
     head "/users", HealthCheckController, :head
   end
