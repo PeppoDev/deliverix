@@ -4,17 +4,19 @@ defmodule DeliverixWeb.Router do
   alias DeliverixWeb.Plugs.UUIDChecker
 
   pipeline :api do
-    plug :accepts, ["json"]
-    plug UUIDChecker
+    plug(:accepts, ["json"])
+    plug(UUIDChecker)
   end
 
   scope "/api", DeliverixWeb do
-    pipe_through :api
+    pipe_through(:api)
 
-    get "/", WelcomeController, :index
-    resources "/users", UsersController, except: [:new, :edit]
+    get("/", WelcomeController, :index)
+    resources("/users", UsersController, except: [:new, :edit])
 
-    head "/users", HealthCheckController, :head
+    head("/users", HealthCheckController, :head)
+
+    post("/items", ItemsController, :create)
   end
 
   # Enables LiveDashboard only for development
@@ -28,9 +30,9 @@ defmodule DeliverixWeb.Router do
     import Phoenix.LiveDashboard.Router
 
     scope "/" do
-      pipe_through [:fetch_session, :protect_from_forgery]
+      pipe_through([:fetch_session, :protect_from_forgery])
 
-      live_dashboard "/dashboard", metrics: DeliverixWeb.Telemetry
+      live_dashboard("/dashboard", metrics: DeliverixWeb.Telemetry)
     end
   end
 
@@ -40,9 +42,9 @@ defmodule DeliverixWeb.Router do
   # node running the Phoenix server.
   if Mix.env() == :dev do
     scope "/dev" do
-      pipe_through [:fetch_session, :protect_from_forgery]
+      pipe_through([:fetch_session, :protect_from_forgery])
 
-      forward "/mailbox", Plug.Swoosh.MailboxPreview
+      forward("/mailbox", Plug.Swoosh.MailboxPreview)
     end
   end
 end

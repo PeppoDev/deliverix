@@ -10,8 +10,6 @@ defmodule DeliverixWeb.UsersController do
       |> put_status(:created)
       |> render("create.json", user: user)
     end
-
-    Deliverix.create_user(params)
   end
 
   def show(conn, %{"id" => id}) do
@@ -34,6 +32,7 @@ defmodule DeliverixWeb.UsersController do
     with {:ok, %User{}} <- Deliverix.delete_user(id) do
       conn
       |> put_status(:no_content)
+      |> text("")
     end
   end
 end

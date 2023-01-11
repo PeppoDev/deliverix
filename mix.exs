@@ -55,7 +55,6 @@ defmodule Deliverix.MixProject do
       {:pbkdf2_elixir, "~> 1.4.2"},
       {:excoveralls, "~> 0.10", only: :test},
       {:ex_machina, "~> 2.7.0", only: :test}
-
     ]
   end
 
