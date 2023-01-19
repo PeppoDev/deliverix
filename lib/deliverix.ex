@@ -12,4 +12,7 @@ defmodule Deliverix do
   alias Deliverix.Items.Create, as: ItemCreate
 
   defdelegate create_item(params), to: ItemCreate, as: :call
+
+  alias Deliverix.Orders.Create, as: OrderCreate
+  defdelegate create_order(params), to: OrderCreate, as: :call
 end

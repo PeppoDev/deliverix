@@ -17,6 +17,7 @@ defmodule DeliverixWeb.Router do
     head("/users", HealthCheckController, :head)
 
     post("/items", ItemsController, :create)
+    post("/orders", OrdersController, :create)
   end
 
   # Enables LiveDashboard only for development

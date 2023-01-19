@@ -1,11 +1,13 @@
 defmodule Deliverix.User do
   use Ecto.Schema
   import Ecto.Changeset
+
   alias Ecto.Changeset
+  alias Deliverix.Order
 
   @primary_key {:id, :binary_id, autogenerate: true}
 
-  # re add password as required field
+  # TODO: re add password as required field
   @required_params [:age, :address, :cep, :cpf, :email, :name]
 
   @derive {Jason.Encoder, only: [:id, :age, :cpf, :address, :email]}
@@ -19,6 +21,8 @@ defmodule Deliverix.User do
     field :password_hash, :string
     field :password, :string, virtual: true
     field :name, :string
+
+    has_many :orders, Order
 
     timestamps()
   end
