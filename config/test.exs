@@ -13,6 +13,8 @@ config :deliverix, Deliverix.Repo,
   pool: Ecto.Adapters.SQL.Sandbox,
   pool_size: 10
 
+config :deliverix, Deliverix.Users.Create, via_cep_client: Deliverix.ViaCep.ClientMock
+
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
 config :deliverix, DeliverixWeb.Endpoint,

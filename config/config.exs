@@ -10,6 +10,8 @@ import Config
 config :deliverix,
   ecto_repos: [Deliverix.Repo]
 
+config :deliverix, Deliverix.Users.Create, via_cep_client: Deliverix.ViaCep.Client
+
 config :deliverix, Deliverix.Repo,
   migration_primary_key: [type: :binary_id],
   migration_foreign_key: [type: :binary_id]

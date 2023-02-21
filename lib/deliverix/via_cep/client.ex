@@ -3,6 +3,9 @@ defmodule Deliverix.ViaCep.Client do
 
   alias Deliverix.Error
   alias Tesla.Env
+  alias Deliverix.ViaCep.Behaviour
+
+  @behaviour Behaviour
 
   plug(Tesla.Middleware.JSON)
 

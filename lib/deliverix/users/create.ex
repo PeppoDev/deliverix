@@ -1,5 +1,4 @@
 defmodule Deliverix.Users.Create do
-  alias Deliverix.ViaCep.Client
   alias Deliverix.{Repo, User, Error}
 
   def call(params) do
@@ -8,12 +7,16 @@ defmodule Deliverix.Users.Create do
 
     #  add cpf validation as a custom ecto changeset validation
     with {:ok, %User{}} <- User.build(changeset),
-         {:ok, _cep_info} <- Client.get_cep_info(cep),
+         {:ok, _cep_info} <- client().get_cep_info(cep),
          {:ok, %User{} = user} <- Repo.insert(changeset) do
-      user
+      {:ok, user}
     else
       {:error, %Error{}} = error -> error
       {:error, result} -> {:error, Error.build(:bad_request, result)}
     end
+  end
+
+  defp client do
+    Application.fetch_env!(:deliverix, __MODULE__)[:via_cep_client]
   end
 end
