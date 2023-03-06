@@ -3,7 +3,7 @@ defmodule Deliverix.Users.Find do
 
   def by_id(id) do
     case Repo.get(User, id) do
-      nil -> {:error, Error.build_user_not_fround_error()}
+      nil -> {:error, Error.build_user_not_found_error()}
       %User{} = user -> {:ok, user}
     end
   end
