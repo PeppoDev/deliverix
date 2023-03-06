@@ -1,14 +1,16 @@
 defmodule DeliverixWeb.UsersController do
   use DeliverixWeb, :controller
   alias Deliverix.User
+  alias DeliverixWeb.Auth.Guardian
 
   action_fallback DeliverixWeb.FallbackController
 
   def create(conn, params) do
-    with {:ok, %User{} = user} <- Deliverix.create_user(params) do
+    with {:ok, %User{} = user} <- Deliverix.create_user(params),
+         {:ok, token, _claims} <- Guardian.encode_and_sign(user) do
       conn
       |> put_status(:created)
-      |> render("create.json", user: user)
+      |> render("create.json", token: token, user: user)
     end
   end
 
@@ -33,6 +35,15 @@ defmodule DeliverixWeb.UsersController do
       conn
       |> put_status(:no_content)
       |> text("")
+    end
+  end
+
+  #  move to a dedicated controller
+  def login(conn, params) do
+    with {:ok, token} <- Guardian.authenticate(params) do
+      conn
+      |> put_status(:ok)
+      |> render("login.json", token: token)
     end
   end
 end
