@@ -13,16 +13,16 @@ defmodule Deliverix.User do
   @derive {Jason.Encoder, only: [:id, :age, :cpf, :address, :email]}
 
   schema "users" do
-    field :age, :integer
-    field :address, :string
-    field :cep, :string
-    field :cpf, :string
-    field :email, :string
-    field :password_hash, :string
-    field :password, :string, virtual: true
-    field :name, :string
+    field(:age, :integer)
+    field(:address, :string)
+    field(:cep, :string)
+    field(:cpf, :string)
+    field(:email, :string)
+    field(:password_hash, :string)
+    field(:password, :string, virtual: true)
+    field(:name, :string)
 
-    has_many :orders, Order
+    has_many(:orders, Order)
 
     timestamps()
   end
@@ -31,7 +31,7 @@ defmodule Deliverix.User do
 
   def changeset(struct \\ %__MODULE__{}, params) do
     struct
-    |> cast(params, @required_params)
+    |> cast(params, @required_params ++ [:password])
     |> validate_required(@required_params)
     |> validate_length(:password, min: 6)
     |> validate_length(:cep, is: 8)
