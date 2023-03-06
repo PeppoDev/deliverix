@@ -12,6 +12,10 @@ config :deliverix,
 
 config :deliverix, Deliverix.Users.Create, via_cep_client: Deliverix.ViaCep.Client
 
+config :deliverix, DeliverixWeb.Auth.Guardian,
+  issuer: "deliverix",
+  secret_key: "FgaJSHGVbre/gwnuycCalc2anPvpTYy7Ke/TPst+XfhmNG09baAZJyj0JiQTEmbg"
+
 config :deliverix, Deliverix.Repo,
   migration_primary_key: [type: :binary_id],
   migration_foreign_key: [type: :binary_id]
@@ -22,6 +26,10 @@ config :deliverix, DeliverixWeb.Endpoint,
   render_errors: [view: DeliverixWeb.ErrorView, accepts: ~w(json), layout: false],
   pubsub_server: Deliverix.PubSub,
   live_view: [signing_salt: "Qb+ZqelF"]
+
+config :deliverix, DeliverixWeb.Auth.Pipeline,
+  module: DeliverixWeb.Auth.Guardian,
+  error_handler: DeliverixWeb.Auth.ErrorHandler
 
 # Configures the mailer
 #

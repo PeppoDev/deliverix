@@ -8,13 +8,22 @@ defmodule DeliverixWeb.Router do
     plug(UUIDChecker)
   end
 
+  pipeline :auth do
+    plug DeliverixWeb.Auth.Pipeline
+  end
+
   scope "/api", DeliverixWeb do
     pipe_through(:api)
 
     get("/", WelcomeController, :index)
-    resources("/users", UsersController, except: [:new, :edit])
+    post("/users", UsersController, :create)
+    post("/users/login", UsersController, :login)
+  end
 
-    head("/users", HealthCheckController, :head)
+  scope "/api", DeliverixWeb do
+    pipe_through [:api, :auth]
+
+    resources("/users", UsersController, except: [:new, :edit, :create])
 
     post("/items", ItemsController, :create)
     post("/orders", OrdersController, :create)
