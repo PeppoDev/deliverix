@@ -4,6 +4,7 @@ defmodule DeliverixWeb.UsersControllerTest do
   import Deliverix.Factory
   import Mox
 
+  alias DeliverixWeb.Auth.Guardian
   alias Deliverix.ViaCep.ClientMock
 
   describe "create/2" do
@@ -75,9 +76,17 @@ defmodule DeliverixWeb.UsersControllerTest do
   end
 
   describe "delete/2" do
+    setup %{conn: conn} do
+      user = insert(:user)
+      {:ok, token, _claims} = Guardian.encode_and_sign(user)
+
+      conn = put_req_header(conn, "authorization", "Bearer #{token}")
+
+      {:ok, conn: conn}
+    end
+
     test "when the user were find by given id, delete it", %{conn: conn} do
       id = "f23443d3-36b9-476b-97c9-1569019ebbfa"
-      insert(:user)
 
       response =
         conn

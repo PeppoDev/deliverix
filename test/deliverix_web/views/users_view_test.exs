@@ -10,7 +10,7 @@ defmodule DeliverixWeb.UsersViewTest do
   test "render create.json" do
     user = build(:user)
 
-    response = render(UsersView, "create.json", user: user)
+    response = render(UsersView, "create.json", user: user, token: "test")
 
     assert %{message: "User created", user: %User{}} = response
   end

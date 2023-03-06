@@ -29,7 +29,7 @@ defmodule Deliverix.UserTest do
     end
 
     test "when there are some errors, returns an invalid changeset" do
-      params = build(:user_params, %{"age" => 15, "password" => "123"})
+      params = build(:user_params, %{"age" => 15, "password" => "123456"})
 
       response = User.changeset(params)
       expected_response = %{age: ["must be greater than or equal to 18"]}
